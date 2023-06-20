@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 from pyArduino.pyArduinoPlot import *
 from tkinter import *
 
@@ -47,7 +46,7 @@ def borrar(): # Con esta función borramos todos lo datos guardados
     estado.set('Datos Borrados')
 
 def guardar(): # Con esta función guardamos los datos obtenidos de la lectura
-    arduino.saveData()
+    arduino.saveData(Filename = entrada.get())
     estado.set('Datos Guardados')
 
 def cuando_cerrar(): # Indica qué va a pasar cuando cerremos la función
