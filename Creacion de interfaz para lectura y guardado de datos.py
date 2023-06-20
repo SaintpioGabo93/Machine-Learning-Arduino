@@ -46,7 +46,7 @@ def borrar(): # Con esta función borramos todos lo datos guardados
     estado.set('Datos Borrados')
 
 def guardar(): # Con esta función guardamos los datos obtenidos de la lectura
-    arduino.saveData(Filename = entrada.get())
+    arduino.saveData(Filename = entrada.get()) # Este es importante, porque le va a dar una dirección al los datos guardados.
     estado.set('Datos Guardados')
 
 def cuando_cerrar(): # Indica qué va a pasar cuando cerremos la función
