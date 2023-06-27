@@ -28,7 +28,7 @@ P_entrenamiento, P_prueba, T_entrenamiento, T_prueba = train_test_split(P, T, te
 # Establecer hiperparámetros de algoritmo (tasa de aprendizaje, épocas).
 epocas = 1000
     # tasa_aprendizaje = 0.01 Solo para optimizador SDG
-nodos_ocultos = 10
+nodos_ocultos = 2
 
 # Inicialización de Pesos y sesgos..
 
@@ -38,26 +38,26 @@ nodos_ocultos = 10
 from keras.models import Sequential
 from keras.layers import Dense
 
-model = Sequential()
-model.add(Dense(nodos_ocultos, activation='relu', input_dim=3))
-model.add(Dense(1, activation='relu'))
-model.summary()
+modelo = Sequential()
+modelo.add(Dense(nodos_ocultos, activation='relu', input_dim=3))
+modelo.add(Dense(1, activation='relu'))
+modelo.summary()
 
 # Declara las funcion de pérdida.
 perdida = 'binary_crossentropy'
 
 # Optimizador.
 
-        #Pueden ser optimizador SDG, RMSprop, Adam
+        #Pueden ser optimizador SGD(learning_rate = numero ), RMSprop, Adam
 optimizador = tf.keras.optimizers.RMSprop()
 
-model.compile(loss=perdida,
+modelo.compile(loss=perdida,
               optimizer=optimizador,
               metrics=['accuracy'])
 
 # Entrenar el modelo
 
-history = model.fit(P_entrenamiento, T_entrenamiento, epochs=epocas, verbose=1, validation_split=0.1) # Validation Split
+history = modelo.fit(P_entrenamiento, T_entrenamiento, epochs=epocas, verbose=1, validation_split=0.1) # Validation Split
         # Es un parámetro de conjunto de validación y corroborar si está bien
         # Nuestro algoritmo
 plt.xlabel('Epocas')
@@ -68,12 +68,12 @@ plt.legend()
 plt.grid()
 
 # Evaluar el modelo
-test_loss, test_acc = model.evaluate(P_prueba, T_prueba, verbose=1)
-print('Exactitud de prueba: ', test_acc)
+perdida_prueba, exactitud_prueba = modelo.evaluate(P_prueba, T_prueba, verbose=1)
+print('Exactitud de prueba: ', exactitud_prueba)
 
 # Extraer valores pesos,normalizacion y la arquitectura de la red para Arduino
-weights(model.layers, 3)
+weights(modelo.layers, 3)
 scaling(escalador, 3)
-layers(model.layers)
+layers(modelo.layers)
 
 plt.show()
