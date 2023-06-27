@@ -18,7 +18,7 @@ from sklearn.preprocessing import StandardScaler  # pip install -U scikit-learn
 
 escalador = StandardScaler().fit(P)
 
-escalador.transform(P)
+P = escalador.transform(P)
 
 # Dividir el conjuntos de datos en conjuntos de entrenamiento y prueba.
 from sklearn.model_selection import train_test_split
@@ -30,9 +30,9 @@ epocas = 1000
     # tasa_aprendizaje = 0.01 Solo para optimizador SDG
 nodos_ocultos = 2
 
-# Inicialización de Pesos y sesgos..
+                # Inicialización de Pesos y sesgos..
 
-    # Ya no hace falta poner los pesos y sesgos, porque el programa y a lo hace
+                 # Ya no hace falta poner los pesos y sesgos, porque el programa y a lo hace
 
 # Definir la arquitectura de la red neuronal.
 from keras.models import Sequential
@@ -40,7 +40,7 @@ from keras.layers import Dense
 
 modelo = Sequential()
 modelo.add(Dense(nodos_ocultos, activation='relu', input_dim=3))
-modelo.add(Dense(1, activation='relu'))
+modelo.add(Dense(1, activation='sigmoid'))
 modelo.summary()
 
 # Declara las funcion de pérdida.
@@ -48,7 +48,7 @@ perdida = 'binary_crossentropy'
 
 # Optimizador.
 
-        #Pueden ser optimizador SGD(learning_rate = numero ), RMSprop, Adam
+        #Pueden ser optimizador SGD(learning_rate = tasa_aprendizaje ), RMSprop, Adam
 optimizador = tf.keras.optimizers.RMSprop()
 
 modelo.compile(loss=perdida,
