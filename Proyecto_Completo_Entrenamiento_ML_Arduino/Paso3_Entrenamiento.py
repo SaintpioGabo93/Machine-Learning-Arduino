@@ -15,31 +15,32 @@ T = np.load('TensorClases.npy')
 # Preprocesamiento de datos.
 from sklearn.preprocessing import StandardScaler  # pip install -U scikit-learn
 
-scaler = StandardScaler().fit(P)
 
-P = scaler.transform(P)
+escalador = StandardScaler().fit(P)
+
+escalador.transform(P)
 
 # Dividir el conjuntos de datos en conjuntos de entrenamiento y prueba.
 from sklearn.model_selection import train_test_split
 
-P_entrenamiento, P_prueba, T_entrenamiento, T_prueba = train_test_split(P, T, test_size=0.20, random_state=42)
+P_entrenamiento, P_prueba, T_entrenamiento, T_prueba = train_test_split(P, T, test_size=0.20,shuffle= True, random_state=42)
 
 # Establecer hiperparámetros de algoritmo (tasa de aprendizaje, épocas).
 epocas = 1000
     # tasa_aprendizaje = 0.01 Solo para optimizador SDG
-nodos_ocultos = 3
+nodos_ocultos = 10
 
 # Inicialización de Pesos y sesgos..
 
     # Ya no hace falta poner los pesos y sesgos, porque el programa y a lo hace
 
 # Definir la arquitectura de la red neuronal.
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
+from keras.models import Sequential
+from keras.layers import Dense
 
 model = Sequential()
 model.add(Dense(nodos_ocultos, activation='relu', input_dim=3))
-model.add(Dense(1, activation='sigmoid'))
+model.add(Dense(1, activation='relu'))
 model.summary()
 
 # Declara las funcion de pérdida.
@@ -47,8 +48,8 @@ perdida = 'binary_crossentropy'
 
 # Optimizador.
 
-        #Pueden ser optimizador SDG, LOL, Adam
-optimizador = tf.keras.optimizers.Adam()
+        #Pueden ser optimizador SDG, RMSprop, Adam
+optimizador = tf.keras.optimizers.RMSprop()
 
 model.compile(loss=perdida,
               optimizer=optimizador,
@@ -72,7 +73,7 @@ print('Exactitud de prueba: ', test_acc)
 
 # Extraer valores pesos,normalizacion y la arquitectura de la red para Arduino
 weights(model.layers, 3)
-scaling(scaler, 3)
+scaling(escalador, 3)
 layers(model.layers)
 
 plt.show()
